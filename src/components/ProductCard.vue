@@ -1,103 +1,75 @@
 <script setup lang="ts">
 import type { Product } from '../services/api';
+import { useRouter } from 'vue-router';
+import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
   product: Product;
 }>();
+
+const router = useRouter();
+const goToDetail = () => {
+  router.push({ name: 'product', params: { id: props.product.id } });
+};
+
+// Currency conversion (approximate USD to LKR)
+const priceLKR = computed(() => {
+  return (props.product.price * 300).toLocaleString('en-LK', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+});
 </script>
 
 <template>
-  <div class="product-card">
-    <div class="image-container">
-      <img :src="product.image" :alt="product.title" loading="lazy" />
+  <div 
+    @click="goToDetail"
+    class="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 hover:-translate-y-2 cursor-pointer flex flex-col h-full relative"
+  >
+    <!-- Image -->
+    <div class="aspect-[1/1] bg-gray-50 dark:bg-gray-700/50 relative overflow-hidden p-8 flex items-center justify-center">
+       <div class="absolute inset-0 bg-radial-gradient from-white to-transparent dark:from-transparent opacity-50"></div>
+      <img 
+        :src="product.thumbnail" 
+        :alt="product.title" 
+        loading="lazy" 
+        class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 ease-out drop-shadow-sm z-10"
+      />
+      <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg tracking-wider z-20">
+        -{{ Math.round(product.discountPercentage) }}%
+      </div>
     </div>
-    <div class="info">
-      <h3 class="title" :title="product.title">{{ product.title }}</h3>
-      <p class="category">{{ product.category }}</p>
-      <div class="price-row">
-        <span class="price">${{ product.price.toFixed(2) }}</span>
-        <div class="rating">
-           ⭐ {{ product.rating.rate }} ({{ product.rating.count }})
+
+    <!-- Info -->
+    <div class="p-6 flex flex-col flex-grow text-center relative z-10">
+      <div class="flex items-center justify-center gap-2 mb-3">
+         <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full uppercase tracking-widest border border-emerald-100 dark:border-emerald-900">
+           {{ product.brand || product.category }}
+         </span>
+      </div>
+
+      <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-emerald-600 transition-colors h-[3rem] flex items-center justify-center">
+        {{ product.title }}
+      </h3>
+      
+      <div class="flex items-center justify-center gap-1 text-xs font-medium text-gray-400 mb-6">
+         <div class="flex text-yellow-400">
+           <span v-for="i in 5" :key="i" :class="i <= Math.round(product.rating) ? 'opacity-100' : 'opacity-30'">★</span>
+         </div>
+         <span class="ml-1 text-gray-500 dark:text-gray-400">({{ product.rating }})</span>
+      </div>
+      
+      <div class="mt-auto pt-6 flex flex-col items-center gap-4 border-t border-gray-100 dark:border-gray-700/50 w-full">
+        <div class="flex flex-col items-center">
+          <span class="text-xs text-gray-400 line-through font-medium">LKR {{ ((product.price * 300) / (1 - product.discountPercentage/100)).toLocaleString('en-LK', { maximumFractionDigits: 0 }) }}</span>
+          <span class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">{{ priceLKR }}</span>
         </div>
+        <button class="w-full py-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-300 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm hover:shadow-emerald-500/30 font-bold tracking-wide">
+          Add to Cart
+        </button>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.product-card {
-  background: #1a1a1a;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: 1px solid #333;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
-  border-color: #42b883;
-}
-
-.image-container {
-  height: 200px;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-}
-
-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.info {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  color: #eeeeee;
-}
-
-.category {
-  font-size: 0.85rem;
-  color: #999;
-  text-transform: capitalize;
-  margin-bottom: auto;
-}
-
-.price-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.price {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #42b883;
-}
-
-.rating {
-  font-size: 0.85rem;
-  color: #f1c40f;
-}
-</style>
