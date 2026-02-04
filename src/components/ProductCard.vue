@@ -26,19 +26,21 @@ defineProps<{
 
 <style scoped>
 .product-card {
-  background: white;
+  background: #1a1a1a;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   height: 100%;
+  border: 1px solid #333;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+  border-color: #42b883;
 }
 
 .image-container {
@@ -47,7 +49,7 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f9fa;
+  background: white;
 }
 
 img {
@@ -71,12 +73,12 @@ img {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: #2c3e50;
+  color: #eeeeee;
 }
 
 .category {
   font-size: 0.85rem;
-  color: #666;
+  color: #999;
   text-transform: capitalize;
   margin-bottom: auto;
 }
