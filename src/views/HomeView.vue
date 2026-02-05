@@ -50,17 +50,17 @@ watch(() => route.query.q, loadProducts);
 </script>
 
 <template>
-  <div class="home-view min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
+  <div class="home-view min-h-screen bg-zinc-50 lg:bg-zinc-100 dark:bg-zinc-900 dark:md:bg-zinc-950 dark:lg:bg-[#808080] transition-colors duration-300">
     
     <!-- Hero Section -->
     <section class="relative bg-white dark:bg-zinc-900 overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
-        <div class="absolute inset-0 z-0 opacity-40 dark:opacity-20 bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-fuchsia-500/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+        <div class="absolute inset-0 z-0 opacity-40 dark:opacity-20 bg-[radial-gradient(#52525b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-zinc-500/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-zinc-500/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
         
         <div class="container mx-auto px-4 py-16 md:py-24 relative z-10 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-6 tracking-tight">
-                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400">Single Page Application</span>
+                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-400">Aarsan store</span>
             </h1>
             <p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto mb-8 font-light">
                 Explore our curated collection of high-quality tech essentials designed to elevate your lifestyle.

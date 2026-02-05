@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 
 // Dark mode logic
 const isDark = ref(document.documentElement.classList.contains('dark'));
+
 const toggleDark = () => {
   isDark.value = !isDark.value;
   if (isDark.value) {
     document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
   } else {
     document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
   }
 };
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    isDark.value = false;
+    document.documentElement.classList.remove('dark');
+  } else if (savedTheme === 'dark') {
+    isDark.value = true;
+    document.documentElement.classList.add('dark');
+  }
+  // Default is dark (from html class), so if no savedTheme, we stick with dark
+});
 
 const searchQuery = ref('');
 const router = useRouter();
@@ -35,7 +50,7 @@ const handleSearch = () => {
         <div class="relative w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-violet-500/30 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
         </div>
-        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-white dark:to-zinc-300 hidden sm:block tracking-tight">Single Page Application</span>
+        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-white dark:to-zinc-300 hidden sm:block tracking-tight">Aarsan store</span>
       </RouterLink>
 
       <!-- Search Bar -->
