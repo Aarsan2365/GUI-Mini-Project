@@ -20,32 +20,36 @@ const selectCategory = (category: string) => {
 </script>
 
 <template>
-  <div class="filter-bar py-4 overflow-x-auto whitespace-nowrap bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 mb-6">
-    <div class="container mx-auto px-4 flex gap-2 justify-center flex-wrap">
-      <button 
-        @click="selectCategory('')"
-        :class="[
-          'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-          selectedCategory === '' 
-            ? 'bg-emerald-500 text-white shadow-md' 
-            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-        ]"
-      >
-        All
-      </button>
-      <button 
-        v-for="category in categories" 
-        :key="category"
-        @click="selectCategory(category)"
-        :class="[
-          'px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize',
-          selectedCategory === category 
-            ? 'bg-emerald-500 text-white shadow-md' 
-            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-        ]"
-      >
-        {{ category.replace('-', ' ') }}
-      </button>
+  <div class="filter-bar sticky top-20 z-40 py-4 bg-zinc-50/95 dark:bg-zinc-950/95 backdrop-blur-sm transition-all duration-300">
+    <div class="container mx-auto px-4">
+        <!-- Scrollable Container -->
+        <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x justify-start md:justify-center">
+          <button 
+            @click="selectCategory('')"
+            :class="[
+              'px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap snap-start border',
+              selectedCategory === '' 
+                ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-lg shadow-zinc-900/20 dark:shadow-white/10 border-transparent hover:-translate-y-0.5' 
+                : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 shadow-sm'
+            ]"
+          >
+            All Products
+          </button>
+          
+          <button 
+            v-for="category in categories" 
+            :key="category"
+            @click="selectCategory(category)"
+            :class="[
+              'px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap snap-start border capitalize',
+              selectedCategory === category 
+                ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-lg shadow-zinc-900/20 dark:shadow-white/10 border-transparent hover:-translate-y-0.5' 
+                : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 shadow-sm'
+            ]"
+          >
+            {{ category.replace('-', ' ') }}
+          </button>
+      </div>
     </div>
   </div>
 </template>

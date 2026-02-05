@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 body {
-    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+    font-family: 'Outfit', sans-serif;
+    @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 antialiased selection:bg-violet-500 selection:text-white;
 }
 
 @utility scrollbar-hide {

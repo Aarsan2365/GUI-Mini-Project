@@ -57,9 +57,8 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
 
 export const fetchCategories = async (): Promise<string[]> => {
     try {
-        const response = await api.get<string[]>('/products/categories');
-        // DummyJSON returns array of objects with slug, name, url OR just strings depending on endpoint version
-        // Checking documentation: /products/category-list returns string[]
+        // Use category-list endpoint which returns string[]
+        const response = await api.get<string[]>('/products/category-list');
         return response.data;
     } catch (error) {
         // Fallback or try category-list if categories returns objects
