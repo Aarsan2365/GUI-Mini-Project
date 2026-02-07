@@ -8,6 +8,7 @@ import FilterBar from '../components/FilterBar.vue';
 const products = ref<Product[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
+const selectedProduct = ref<Product | null>(null);
 const route = useRoute();
 
 const loadProducts = async () => {
@@ -18,7 +19,7 @@ const loadProducts = async () => {
     if (query) {
       products.value = await searchProducts(query);
     } else {
-      products.value = await fetchProducts(30);
+      products.value = await fetchProducts(150);
     }
   } catch (err) {
     error.value = 'Failed to load products. Please try again later.';
@@ -41,6 +42,16 @@ const handleFilter = async (category: string) => {
   } finally {
       loading.value = false;
   }
+};
+
+const openProductModal = (product: Product) => {
+  selectedProduct.value = product;
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+};
+
+const closeProductModal = () => {
+  selectedProduct.value = null;
+  document.body.style.overflow = ''; // Restore scrolling
 };
 
 onMounted(loadProducts);
@@ -110,9 +121,98 @@ watch(() => route.query.q, loadProducts);
         <ProductCard 
           v-for="product in products" 
           :key="product.id" 
-          :product="product" 
+          :product="product"
+          @show-details="openProductModal" 
         />
       </div>
     </div>
+
+    <!-- Product Details Modal -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="selectedProduct" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="closeProductModal"></div>
+
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-5xl bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:max-h-[800px] animate-in fade-in zoom-in-95 duration-300">
+            
+            <!-- Close Button -->
+            <button 
+                @click="closeProductModal"
+                class="absolute top-4 right-4 z-10 p-2 bg-white/80 dark:bg-black/50 backdrop-blur rounded-full text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <!-- Image Section -->
+            <div class="w-full md:w-1/2 bg-zinc-50 dark:bg-zinc-800/50 p-8 flex items-center justify-center relative">
+                 <div class="absolute inset-0 bg-[radial-gradient(#e4e4e7_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:20px_20px] opacity-50"></div>
+                 <img 
+                    :src="selectedProduct.thumbnail" 
+                    :alt="selectedProduct.title" 
+                    class="w-full h-full object-contain max-h-[400px] md:max-h-full mix-blend-multiply dark:mix-blend-normal relative z-10"
+                 />
+            </div>
+
+            <!-- Details Section -->
+            <div class="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto custom-scrollbar">
+                <div class="mb-6">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-violet-700 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 border border-violet-100 dark:border-violet-800/50 mb-4">
+                        {{ selectedProduct.brand || selectedProduct.category }}
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-zinc-900 dark:text-white mb-4 leading-tight">
+                        {{ selectedProduct.title }}
+                    </h2>
+                     <div class="flex items-center gap-2 mb-6">
+                        <div class="flex text-amber-400 text-sm">
+                            <span v-for="i in 5" :key="i" class="drop-shadow-sm">{{ i <= Math.round(selectedProduct.rating) ? '★' : '☆' }}</span>
+                        </div>
+                        <span class="text-sm font-medium text-zinc-500 dark:text-zinc-400">({{ selectedProduct.rating }} Rating)</span>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <p class="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-light">
+                        {{ selectedProduct.description }}
+                    </p>
+
+                    <div class="flex flex-col gap-1 p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                        <span class="text-sm text-zinc-500 line-through">LKR {{ ((selectedProduct.price * 300) / (1 - selectedProduct.discountPercentage/100)).toLocaleString('en-LK', { maximumFractionDigits: 0 }) }}</span>
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-4xl font-bold text-zinc-900 dark:text-white">
+                                {{ (selectedProduct.price * 300).toLocaleString('en-LK', { style: 'currency', currency: 'LKR', minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
+                            </span>
+                            <span class="text-sm font-bold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-md">
+                                {{ Math.round(selectedProduct.discountPercentage) }}% OFF
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-100 dark:border-zinc-800">
+                            <span class="block text-zinc-500 dark:text-zinc-400 mb-1">Category</span>
+                            <span class="font-semibold text-zinc-900 dark:text-white capitalize">{{ selectedProduct.category }}</span>
+                        </div>
+                         <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-100 dark:border-zinc-800">
+                            <span class="block text-zinc-500 dark:text-zinc-400 mb-1">Stock</span>
+                            <span class="font-semibold text-zinc-900 dark:text-white">{{ selectedProduct.stock }} Units</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-zinc-500/20 transition-all active:scale-[0.98]">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
