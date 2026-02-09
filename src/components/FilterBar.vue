@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { fetchCategories } from '../services/api';
+// import { fetchCategories } from '../services/api';
 
 const categories = ref<string[]>([]);
 const selectedCategory = ref('');
@@ -9,11 +9,20 @@ const emit = defineEmits<{
   (e: 'filter', category: string): void;
 }>();
 
-onMounted(async () => {
-  const allCategories = await fetchCategories();
-  console.log('Total categories fetched:', allCategories.length);
-  categories.value = allCategories.slice(0, 10);
-  console.log('Categories displayed:', categories.value.length);
+onMounted(() => {
+  categories.value = [
+    'laptops',
+    'smartphones',
+    'tablets',
+    'mobile-accessories',
+    'mens-watches',
+    'womens-watches',
+    'mens-shirts',
+    'tops',
+    'mens-shoes',
+    'womens-shoes',
+    'sunglasses'
+  ];
 });
 
 const selectCategory = (category: string) => {
