@@ -93,7 +93,7 @@ watch(() => route.query.q, loadProducts);
     <div class="container mx-auto px-4 pb-20">
       
       <!-- Loading State (Skeleton Grid) -->
-      <div v-if="loading" class="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8">
+      <div v-if="loading" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
         <div v-for="n in 8" :key="n" class="bg-white dark:bg-zinc-900 rounded-3xl p-4 border border-zinc-100 dark:border-zinc-800 shadow-sm h-[400px] flex flex-col">
             <div class="w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-800 rounded-2xl mb-4 animate-pulse"></div>
             <div class="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-3/4 mb-2 animate-pulse"></div>
@@ -125,7 +125,7 @@ watch(() => route.query.q, loadProducts);
       </div>
 
       <!-- Product Grid -->
-      <div v-else class="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8">
+      <div v-else class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
         <ProductCard 
           v-for="product in products" 
           :key="product.id" 
