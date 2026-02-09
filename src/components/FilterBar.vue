@@ -10,7 +10,10 @@ const emit = defineEmits<{
 }>();
 
 onMounted(async () => {
-  categories.value = await fetchCategories();
+  const allCategories = await fetchCategories();
+  console.log('Total categories fetched:', allCategories.length);
+  categories.value = allCategories.slice(0, 10);
+  console.log('Categories displayed:', categories.value.length);
 });
 
 const selectCategory = (category: string) => {
