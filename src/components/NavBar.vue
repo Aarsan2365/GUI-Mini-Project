@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
+import { useStore } from '../services/store';
 
-// Dark mode logic
+const store = useStore();
+const router = useRouter();
+
+const handleLogout = () => {
+  store.logout();
+  router.push('/login');
+};
 const isDark = ref(document.documentElement.classList.contains('dark'));
 
 const toggleDark = () => {
@@ -29,7 +36,7 @@ onMounted(() => {
 });
 
 const searchQuery = ref('');
-const router = useRouter();
+
 
 const handleSearch = () => {
   if (searchQuery.value.trim()) {
@@ -79,6 +86,30 @@ const handleSearch = () => {
         <RouterLink to="/" class="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:text-violet-600 dark:hover:text-violet-400 transition-all font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           Home
+        </RouterLink>
+
+        <!-- User Profile / Login -->
+        <div v-if="store.state.isAuthenticated && store.state.user" class="relative group">
+            <button class="flex items-center gap-2 px-2 py-1 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
+                <img :src="store.state.user.image" :alt="store.state.user.username" class="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-700 bg-zinc-100">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-200 hidden sm:block">{{ store.state.user.firstName }}</span>
+            </button>
+            
+            <!-- Dropdown -->
+            <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-100 dark:border-zinc-800 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
+                <div class="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800 mb-1">
+                    <p class="text-sm font-semibold text-zinc-900 dark:text-white truncate">{{ store.state.user.firstName }} {{ store.state.user.lastName }}</p>
+                    <p class="text-xs text-zinc-500 truncate">{{ store.state.user.email }}</p>
+                </div>
+                <button @click="handleLogout" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+
+        <RouterLink v-else to="/login" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all font-bold shadow-lg shadow-zinc-500/20 active:scale-95">
+            Log In
         </RouterLink>
         
         <button 
