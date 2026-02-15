@@ -69,7 +69,7 @@ watch(() => route.query.q, loadProducts);
 </script>
 
 <template>
-  <div class="home-view min-h-screen bg-zinc-50 lg:bg-zinc-100 dark:bg-zinc-900 dark:md:bg-zinc-950 dark:lg:bg-[#808080] transition-colors duration-300">
+  <div class="home-view min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
     
     <!-- Hero Section -->
     <section class="relative bg-white dark:bg-zinc-900 overflow-hidden border-b border-zinc-200 dark:border-zinc-800">

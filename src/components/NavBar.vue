@@ -25,15 +25,17 @@ const toggleDark = () => {
 
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    isDark.value = false;
-    document.documentElement.classList.remove('dark');
-  } else if (savedTheme === 'dark') {
+
+  if (savedTheme === 'dark') {
     isDark.value = true;
     document.documentElement.classList.add('dark');
+  } else {
+    // Default to LIGHT
+    isDark.value = false;
+    document.documentElement.classList.remove('dark');
   }
-  // Default is dark (from html class), so if no savedTheme, we stick with dark
 });
+
 
 const searchQuery = ref('');
 
@@ -48,7 +50,7 @@ const handleSearch = () => {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 w-full transition-all duration-300 border-b bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-zinc-200 dark:border-zinc-800">
+  <nav class="sticky top-0 z-50 w-full transition-all duration-300 border-b backdrop-blur-xl border-zinc-200 dark:border-zinc-800 bg-nav-glass">
     <div class="container px-4 mx-auto h-20 flex items-center justify-between gap-6">
       
       <!-- Logo -->
@@ -126,8 +128,8 @@ const handleSearch = () => {
                 leave-from-class="opacity-100 rotate-0 scale-100"
                 leave-to-class="opacity-0 -rotate-90 scale-50"
              >
-                <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-600"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <svg v-if="!isDark" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-600"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
              </transition>
           </div>
         </button>
