@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { fetchProducts, fetchProductsByCategory, searchProducts, type Product } from '../services/api';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchProducts, fetchProductsByCategory, searchProducts, fetchProductById, type Product } from '../services/api';
+import { useStore } from '../services/store';
 import ProductCard from '../components/ProductCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 
+const store = useStore();
 const products = ref<Product[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
 const selectedProduct = ref<Product | null>(null);
 const route = useRoute();
+const router = useRouter();
 
 const loadProducts = async () => {
   loading.value = true;
@@ -54,18 +57,57 @@ const handleFilter = async (category: string) => {
 
 const openProductModal = (product: Product) => {
   selectedProduct.value = product;
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  document.body.style.overflow = 'hidden';
+  // Update URL to include product ID
+  router.push({ query: { ...route.query, product: product.id } });
 };
 
 const closeProductModal = () => {
   selectedProduct.value = null;
-  document.body.style.overflow = ''; // Restore scrolling
+  document.body.style.overflow = '';
+  // Remove product ID from URL
+  const query = { ...route.query };
+  delete query.product;
+  router.push({ query });
 };
 
 onMounted(loadProducts);
 
 // Watch for search query changes
 watch(() => route.query.q, loadProducts);
+
+// Watch for product query parameter changes (Deep Linking)
+watch(() => route.query.product, async (newId) => {
+  if (newId) {
+    const id = Number(newId);
+    if (!selectedProduct.value || selectedProduct.value.id !== id) {
+       // Check if already in loaded products
+       const found = products.value.find(p => p.id === id);
+       if (found) {
+         selectedProduct.value = found;
+       } else {
+         // Fetch if not locally available (e.g. direct link)
+         try {
+           selectedProduct.value = await fetchProductById(id);
+         } catch (e) {
+           console.error("Failed to fetch product from URL", e);
+         }
+       }
+       document.body.style.overflow = 'hidden';
+    }
+  } else {
+    // If URL param removed, close modal
+    if (selectedProduct.value) {
+      selectedProduct.value = null;
+      document.body.style.overflow = '';
+    }
+  }
+}, { immediate: true });
+
+const addToCart = (product: Product) => {
+  store.addToCart(product);
+  router.replace({ query: { ...route.query, cart: 'true' } });
+};
 </script>
 
 <template>
@@ -214,7 +256,10 @@ watch(() => route.query.q, loadProducts);
                         </div>
                     </div>
 
-                    <button class="w-full py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-zinc-500/20 transition-all active:scale-[0.98]">
+                    <button 
+                        @click="addToCart(selectedProduct!)"
+                        class="w-full py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-zinc-500/20 transition-all active:scale-[0.98]"
+                    >
                         Add to Cart
                     </button>
                 </div>

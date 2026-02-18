@@ -26,6 +26,19 @@ const originalPriceLKR = computed(() => {
 const handleCardClick = () => {
   emit('show-details', props.product);
 };
+
+import { useStore } from '../services/store';
+import { useRouter, useRoute } from 'vue-router';
+
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
+
+const handleAddToCart = () => {
+  store.addToCart(props.product);
+  // Open cart drawer
+  router.replace({ query: { ...route.query, cart: 'true' } });
+};
 </script>
 
 <template>
@@ -87,7 +100,11 @@ const handleCardClick = () => {
           <span class="text-lg font-bold text-zinc-900 dark:text-white tracking-tight">{{ priceLKR }}</span>
         </div>
         
-        <button class="relative z-20 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300 shadow-sm hover:shadow-violet-500/40 hover:scale-105 active:scale-95">
+        <button 
+          @click.stop="handleAddToCart"
+          class="relative z-20 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300 shadow-sm hover:shadow-violet-500/40 hover:scale-105 active:scale-95"
+          title="Add to Cart"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         </button>
       </div>
