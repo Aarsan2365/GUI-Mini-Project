@@ -6,10 +6,6 @@ const props = defineProps<{
   product: Product;
 }>();
 
-const emit = defineEmits<{
-  (e: 'show-details', product: Product): void
-}>();
-
 const priceLKR = computed(() => {
   return (props.product.price * 300).toLocaleString('en-LK', {
     style: 'currency',
@@ -23,16 +19,16 @@ const originalPriceLKR = computed(() => {
     return ((props.product.price * 300) / (1 - props.product.discountPercentage/100)).toLocaleString('en-LK', { maximumFractionDigits: 0 });
 });
 
-const handleCardClick = () => {
-  emit('show-details', props.product);
-};
-
-import { useStore } from '../services/store';
+import { useStore } from '../stores/mainStore';
 import { useRouter, useRoute } from 'vue-router';
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
+
+const handleCardClick = () => {
+  router.push(`/product/${props.product.id}`);
+};
 
 const handleAddToCart = () => {
   store.addToCart(props.product);

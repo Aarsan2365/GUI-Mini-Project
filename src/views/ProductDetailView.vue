@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchProductById, type Product } from '../services/api';
-import { useStore } from '../services/store';
+import { useStore } from '../stores/mainStore';
 
 const store = useStore();
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from '../services/store';
+import { useStore } from '../stores/mainStore';
 
 const username = ref(''); // Default for testing
 const password = ref(''); // Default for testing
@@ -9,7 +9,7 @@ const error = ref('');
 const loading = ref(false);
 
 const router = useRouter();
-const { login } = useStore();
+const store = useStore();
 
 const handleLogin = async () => {
     loading.value = true;
@@ -39,11 +39,15 @@ const handleLogin = async () => {
             throw new Error(data.message || 'Invalid credentials');
         }
 
-        login(data);
+        store.login(data);
         router.push('/');
-    } catch (err: any) {
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            error.value = err.message || 'Login failed. Please check your credentials.';
+        } else {
+            error.value = 'An unexpected error occurred during login.';
+        }
         console.error('Login error:', err);
-        error.value = err.message || 'Login failed. Please check your credentials.';
     } finally {
         loading.value = false;
     }

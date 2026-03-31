@@ -61,13 +61,16 @@ export const fetchCategories = async (): Promise<string[]> => {
         const response = await api.get<string[]>('/products/category-list');
         return response.data;
     } catch (error) {
-        // Fallback or try category-list if categories returns objects
         try {
-            const listResponse = await api.get<any[]>('/products/categories');
-            if (listResponse.data.length > 0 && typeof listResponse.data[0] === 'object') {
-                return listResponse.data.map(c => c.slug || c.name);
+            const listResponse = await api.get<unknown[]>('/products/categories');
+            if (Array.isArray(listResponse.data) && listResponse.data.length > 0) {
+                const firstItem = listResponse.data[0];
+                if (typeof firstItem === 'object' && firstItem !== null) {
+                    const typedList = listResponse.data as { slug?: string, name?: string }[];
+                    return typedList.map(c => c.slug || c.name || '');
+                }
             }
-            return listResponse.data;
+            return listResponse.data as string[];
         } catch (e) {
             console.error('Error fetching categories:', e);
             return [];

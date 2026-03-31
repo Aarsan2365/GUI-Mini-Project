@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStore } from '../services/store';
+import { useStore } from '../stores/mainStore';
 import { useRouter, useRoute } from 'vue-router';
 import { computed } from 'vue';
 
@@ -50,7 +50,7 @@ const handleCheckout = () => {
               <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                   Your Cart
-                  <span class="text-sm font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full ml-2">{{ store.cartCount.value }}</span>
+                  <span class="text-sm font-medium text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full ml-2">{{ store.cartCount }}</span>
               </h2>
               <button @click="closeCart" class="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -104,7 +104,7 @@ const handleCheckout = () => {
               <div class="space-y-3 mb-6">
                   <div class="flex justify-between text-zinc-500 dark:text-zinc-400">
                       <span>Subtotal</span>
-                      <span>LKR {{ (store.cartTotal.value * 300).toLocaleString() }}</span>
+                      <span>LKR {{ (store.cartTotal * 300).toLocaleString() }}</span>
                   </div>
                   <div class="flex justify-between text-zinc-500 dark:text-zinc-400">
                       <span>Shipping</span>
@@ -112,7 +112,7 @@ const handleCheckout = () => {
                   </div>
                   <div class="flex justify-between text-lg font-bold text-zinc-900 dark:text-white pt-3 border-t border-zinc-200 dark:border-zinc-700/50">
                       <span>Total</span>
-                      <span>LKR {{ (store.cartTotal.value * 300).toLocaleString() }}</span>
+                      <span>LKR {{ (store.cartTotal * 300).toLocaleString() }}</span>
                   </div>
               </div>
               
