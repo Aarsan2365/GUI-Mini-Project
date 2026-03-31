@@ -1,0 +1,13 @@
+feat: initialize Vue 3 project with Vite, TypeScript, and TailwindCSS
+feat: implement responsive Product Grid and ProductCard components
+feat: integrate DummyJSON API for dynamic product fetching
+feat: setup Pinia store for global Shopping Cart management
+feat: create slide-over Cart component with NavBar integration
+feat: implement dynamic search and category filtering
+feat: add comprehensive ProductDetailView via Vue Router
+refactor: enforce strict TypeScript typing (zero any) across all components
+refactor: consolidate interfaces into src/types and remove redundant types
+refactor: replace inline HomeView modal with robust ProductDetailView routing
+refactor: dynamically fetch categories in FilterBar instead of using hardcoded arrays
+docs: update README, add prompts.txt and report_draft.md for final submission
+chore: remove temporary script files and clean repository structure

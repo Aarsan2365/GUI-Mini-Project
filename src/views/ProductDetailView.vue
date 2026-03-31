@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { fetchProductById, type Product } from '../services/api';
+import { fetchProductById } from '../services/api';
+import type { Product } from '../types';
 import { useStore } from '../stores/mainStore';
 
 const store = useStore();

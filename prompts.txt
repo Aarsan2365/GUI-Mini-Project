@@ -1,0 +1,23 @@
+The aim 01: Setup initial Vue 3 project with Vite, TypeScript, and TailwindCSS.
+Actual prompt: Create a new Vue 3 project using Vite with TypeScript. Install and configure Tailwind CSS v4. Set up the basic project structure with a clean Home page and a Navigation Bar component.
+
+The aim 02: Implement responsive Product Grid and Product Card components.
+Actual prompt: Build a responsive ProductCard component displaying product thumbnail, title, rating, and price. Use a Grid layout in HomeView to display these cards responsively (2 columns mobile, 3 tablet, 4 desktop).
+
+The aim 03: Integrate DummyJSON API to fetch products and categories.
+Actual prompt: Create an API service file using Axios to fetch products from dummyjson.com. Implement loading and error states in the HomeView while products are being fetched.
+
+The aim 04: Implement a global Shopping Cart with Pinia state management.
+Actual prompt: Create a Pinia store to manage a shopping cart. Add functions to add items, remove items, and update quantities. Persist the cart state to localStorage so it survives page reloads.
+
+The aim 05: Build a slide-over Cart component and integrate it with the Navbar.
+Actual prompt: Build a CartDrawer component that slides in from the right edge. It should display items mapped from the Pinia store with their quantities and a total price calculation. Show a badge with the cart count on the NavBar cart icon.
+
+The aim 06: Implement dynamic Search and filtering functionality.
+Actual prompt: Update the NavBar with a search input. When submitted, fetch search results via the API and update the HomeView. Add a FilterBar to fetch products dynamically by category instead of relying on hardcoded arrays.
+
+The aim 07: Create a detailed Product View utilizing Vue Router.
+Actual prompt: Add a ProductDetailView mapped to the `/product/:id` route. It should display a large image gallery, comprehensive description, rating, review count, and full pricing breakdown, and allow users to add the item directly to the cart.
+
+The aim 08: Refactor codebase for strict TypeScript standards and clean architecture.
+Actual prompt: Audit the entire application to ensure strict TypeScript rules. Remove any usages of the "any" type, particularly in catch blocks, by casting to "unknown". Consolidate duplicate interfaces into a single `src/types` folder and replace overly complex component logic with streamlined Pinia variables and Vue Router functions.

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { fetchProducts, fetchProductsByCategory, searchProducts, type Product } from '../services/api';
+import { fetchProducts, fetchProductsByCategory, searchProducts } from '../services/api';
+import type { Product } from '../types';
 import ProductCard from '../components/ProductCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 

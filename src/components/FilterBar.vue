@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import { fetchCategories } from '../services/api';
+import { fetchCategories } from '../services/api';
 
 const categories = ref<string[]>([]);
 const selectedCategory = ref('');
@@ -9,20 +9,22 @@ const emit = defineEmits<{
   (e: 'filter', category: string): void;
 }>();
 
-onMounted(() => {
-  categories.value = [
-    'laptops',
-    'smartphones',
-    'tablets',
-    'mobile-accessories',
-    'mens-watches',
-    'womens-watches',
-    'mens-shirts',
-    'tops',
-    'mens-shoes',
-    'womens-shoes',
-    'sunglasses'
-  ];
+onMounted(async () => {
+  try {
+    const fetched = await fetchCategories();
+    if (fetched && fetched.length > 0) {
+      categories.value = fetched;
+    } else {
+        throw new Error("No categories returned");
+    }
+  } catch (error) {
+    console.warn("Failed to fetch categories, using fallback.");
+    categories.value = [
+      'laptops', 'smartphones', 'tablets', 'mobile-accessories',
+      'mens-watches', 'womens-watches', 'mens-shirts', 'tops',
+      'mens-shoes', 'womens-shoes', 'sunglasses'
+    ];
+  }
 });
 
 const selectCategory = (category: string) => {
