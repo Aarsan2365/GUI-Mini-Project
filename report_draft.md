@@ -1,8 +1,8 @@
 # University GUI Programming Project Report
-**Project:** Aarsan Store (Vue 3 E-Commerce SPA)
+**Project:** Nisan Store (Vue 3 E-Commerce SPA)
 
 ## Introduction
-The Aarsan Store is a modern, Single Page Application built to simulate a premium e-commerce tech gadget marketplace. Designed with an emphasis on both aesthetic polish and robust architectural principles, the application provides a smooth user experience akin to modern, high-end retail applications.
+The Nisan Store is a modern, Single Page Application built to simulate a premium e-commerce tech gadget marketplace. Designed with an emphasis on both aesthetic polish and robust architectural principles, the application provides a smooth user experience akin to modern, high-end retail applications.
 
 ## Project Objective
 The central objective was to develop a fully functional frontend e-commerce interface using Vue 3 and TypeScript, demonstrating proficiency in component-based architecture, client-side routing, global state management, and modern CSS frameworks (Tailwind CSS) while adhering to strict code formatting and design standards.

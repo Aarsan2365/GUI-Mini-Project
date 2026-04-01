@@ -13,16 +13,17 @@ onMounted(async () => {
   try {
     const fetched = await fetchCategories();
     if (fetched && fetched.length > 0) {
-      categories.value = fetched;
+      const techFirst = ['smartphones', 'laptops', 'tablets', 'mobile-accessories'];
+      const filtered = fetched.filter((c: string) => c !== 'groceries' && !techFirst.includes(c));
+      categories.value = [...techFirst, ...filtered].slice(0, 10);
     } else {
         throw new Error("No categories returned");
     }
   } catch (error) {
     console.warn("Failed to fetch categories, using fallback.");
     categories.value = [
-      'laptops', 'smartphones', 'tablets', 'mobile-accessories',
-      'mens-watches', 'womens-watches', 'mens-shirts', 'tops',
-      'mens-shoes', 'womens-shoes', 'sunglasses'
+      'smartphones', 'laptops', 'tablets', 'mobile-accessories',
+      'furniture', 'home-decoration', 'mens-watches', 'womens-watches'
     ];
   }
 });

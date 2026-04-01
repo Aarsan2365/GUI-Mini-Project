@@ -20,11 +20,10 @@ const originalPriceLKR = computed(() => {
 });
 
 import { useStore } from '../stores/mainStore';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
 const router = useRouter();
-const route = useRoute();
 
 const handleCardClick = () => {
   router.push(`/product/${props.product.id}`);
@@ -32,14 +31,13 @@ const handleCardClick = () => {
 
 const handleAddToCart = () => {
   store.addToCart(props.product);
-  // Open cart drawer
-  router.replace({ query: { ...route.query, cart: 'true' } });
+  router.push('/addtocart');
 };
 </script>
 
 <template>
   <div 
-    class="group relative flex flex-col h-full bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-violet-900/10 dark:hover:shadow-black/50 transition-all duration-500 hover:-translate-y-1 isolate"
+    class="group relative flex flex-col h-full bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-violet-900/10 dark:hover:shadow-black/50 isolate"
   >
     <!-- Link Overlay -->
     <!-- Link Overlay (Removed for Modal) -->
@@ -60,8 +58,7 @@ const handleAddToCart = () => {
 
     <!-- Image Container with Hover Overlay -->
     <div class="relative w-full aspect-[4/3] bg-zinc-50 dark:bg-zinc-800/50 overflow-hidden p-6 flex items-center justify-center">
-        <!-- Shine effect on hover -->
-      <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 z-10 pointer-events-none"></div>
+        <!-- Shine effect removed -->
       
       <img 
         :src="product.thumbnail" 
@@ -79,7 +76,7 @@ const handleAddToCart = () => {
          </span>
       </div>
 
-      <h3 class="font-bold text-base text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-relaxed mb-1 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+      <h3 class="font-bold text-base text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-relaxed mb-1 transition-colors">
         {{ product.title }}
       </h3>
       
@@ -98,7 +95,7 @@ const handleAddToCart = () => {
         
         <button 
           @click.stop="handleAddToCart"
-          class="relative z-20 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300 shadow-sm hover:shadow-violet-500/40 hover:scale-105 active:scale-95"
+          class="relative z-20 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 hover:bg-violet-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-violet-500/40 hover:scale-105 active:scale-95"
           title="Add to Cart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>

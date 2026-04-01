@@ -21,3 +21,27 @@ Actual prompt: Add a ProductDetailView mapped to the `/product/:id` route. It sh
 
 The aim 08: Refactor codebase for strict TypeScript standards and clean architecture.
 Actual prompt: Audit the entire application to ensure strict TypeScript rules. Remove any usages of the "any" type, particularly in catch blocks, by casting to "unknown". Consolidate duplicate interfaces into a single `src/types` folder and replace overly complex component logic with streamlined Pinia variables and Vue Router functions.
+
+The aim 09: Minimize the categories
+Actual prompt: minimize the categaroies
+
+The aim 10: Stop hover effect on product
+Actual prompt: stop the hover effect to the product
+
+The aim 11: Add zoom hover effect to product
+Actual prompt: give some zoom effect to the product when i move the cursor to the product
+
+The aim 12: Ensure exactly 100 products are fetched
+Actual prompt: all products must be 100
+
+The aim 13: Move cart feature to a full screen route
+Actual prompt: and when i click add to card the screen move to http://localhost:5173/addtocart and full screen also
+
+The aim 14: Add a secure Buy Now checkout page
+Actual prompt: add buy option to product that also move to another http://localhost:5173/...... page and ask the customer to add their debit or credit card
+
+The aim 15: Rename application specifically
+Actual prompt: change the app name to Nisan Store 
+
+The aim 16: Expand fetching to include all products up to the 100 limit
+Actual prompt: add 100 products take all the products from dummy json store

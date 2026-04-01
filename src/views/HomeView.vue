@@ -16,18 +16,25 @@ const loadProducts = async () => {
   error.value = null;
   try {
     const query = route.query.q as string;
-    const allowedCategories = [
-      'laptops', 'smartphones', 'tablets', 'mobile-accessories',
-      'mens-watches', 'womens-watches', 'mens-shirts', 'tops',
-      'mens-shoes', 'womens-shoes', 'sunglasses'
-    ];
 
     if (query) {
-      const searchResults = await searchProducts(query);
-      products.value = searchResults.filter(p => allowedCategories.includes(p.category));
+      products.value = await searchProducts(query);
     } else {
       const allProducts = await fetchProducts(150);
-      products.value = allProducts.filter(p => allowedCategories.includes(p.category));
+      const foodCategories = ['groceries'];
+      const techCategories = ['smartphones', 'laptops', 'tablets', 'mobile-accessories'];
+      
+      const filtered = allProducts.filter(p => !foodCategories.includes(p.category));
+      
+      filtered.sort((a, b) => {
+         const aTech = techCategories.includes(a.category);
+         const bTech = techCategories.includes(b.category);
+         if (aTech && !bTech) return -1;
+         if (!aTech && bTech) return 1;
+         return 0;
+      });
+      
+      products.value = filtered.slice(0, 100);
     }
   } catch (err) {
     error.value = 'Failed to load products. Please try again later.';
@@ -69,7 +76,7 @@ watch(() => route.query.q, loadProducts);
         
         <div class="container mx-auto px-4 py-16 md:py-24 relative z-10 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-6 tracking-tight">
-                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-400">Aarsan store</span>
+                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-400">Nisan Store</span>
             </h1>
             <p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto mb-8 font-light">
                 Explore our curated collection of high-quality tech essentials designed to elevate your lifestyle.

@@ -17,7 +17,7 @@
     --color-bg-main: #000000;       /* Deep Midnight Blue */
     --color-text-main: #2e2b0d;     /* Light Gray Text */
     --color-primary: #ffffff;       /* Lighter Indigo */
-    --color-nav: rgba(25, 58, 207, 0.8);      /* See-through Black */
+    --color-nav: rgba(59, 59, 59, 0.8);      /* See-through Black */
   }
 
   /* 3. Apply the variables to the body */

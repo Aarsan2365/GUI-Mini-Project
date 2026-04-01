@@ -12,7 +12,7 @@ const api = axios.create({
     baseURL: 'https://dummyjson.com',
 });
 
-export const fetchProducts = async (limit = 20, skip = 0): Promise<Product[]> => {
+export const fetchProducts = async (limit = 100, skip = 0): Promise<Product[]> => {
     try {
         const response = await api.get<ProductResponse>(`/products?limit=${limit}&skip=${skip}`);
         return response.data.products;
