@@ -76,7 +76,7 @@ watch(() => route.query.q, loadProducts);
         
         <div class="container mx-auto px-4 py-16 md:py-24 relative z-10 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold text-zinc-900 dark:text-white mb-6 tracking-tight">
-                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-400">Nisan Store</span>
+                Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-400">Aarz Store</span>
             </h1>
             <p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto mb-8 font-light">
                 Explore our curated collection of high-quality tech essentials designed to elevate your lifestyle.
@@ -90,7 +90,7 @@ watch(() => route.query.q, loadProducts);
     <div class="container mx-auto px-4 pb-20">
       
       <!-- Loading State (Skeleton Grid) -->
-      <div v-if="loading" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
+      <div v-if="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
         <div v-for="n in 8" :key="n" class="bg-white dark:bg-zinc-900 rounded-3xl p-4 border border-zinc-100 dark:border-zinc-800 shadow-sm h-[400px] flex flex-col">
             <div class="w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-800 rounded-2xl mb-4 animate-pulse"></div>
             <div class="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-3/4 mb-2 animate-pulse"></div>
@@ -122,7 +122,7 @@ watch(() => route.query.q, loadProducts);
       </div>
 
       <!-- Product Grid -->
-      <div v-else class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
+      <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
         <ProductCard 
           v-for="product in products" 
           :key="product.id" 

@@ -5,9 +5,9 @@
   /* 1. Define your colors as variables */
   :root {
     /* LIGHT MODE COLORS */
-    --color-bg-main: #0a6a6c;       /* Light Gray Background */
-    --color-text-main: #1e293b;     /* Dark Blue-Gray Text */
-    --color-primary: #4f46e5;       /* Indigo Brand Color */
+    --color-bg-main: #58bfc1;       /* Light Gray Background */
+    --color-text-main: #91a8ce;     /* Dark Blue-Gray Text */
+    --color-primary: #8b88c7;       /* Indigo Brand Color */
     --color-nav: rgba(139, 190, 239, 0.8); /* See-through White */
   }
 
@@ -15,7 +15,7 @@
   .dark {
     /* DARK MODE COLORS */
     --color-bg-main: #000000;       /* Deep Midnight Blue */
-    --color-text-main: #2e2b0d;     /* Light Gray Text */
+    --color-text-main: #3f3361;     /* Light Gray Text */
     --color-primary: #ffffff;       /* Lighter Indigo */
     --color-nav: rgba(59, 59, 59, 0.8);      /* See-through Black */
   }
