@@ -28,8 +28,20 @@ const router = createRouter({
             path: '/checkout',
             name: 'checkout',
             component: () => import('../views/CheckoutView.vue'),
+            meta: { requiresAuth: true }
         },
     ],
+});
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = !!localStorage.getItem('token');
+
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        // Redirect to login if user is not authenticated and trying to access a protected route
+        next('/login');
+    } else {
+        next();
+    }
 });
 
 export default router;
