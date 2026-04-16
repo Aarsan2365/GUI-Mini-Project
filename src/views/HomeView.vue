@@ -70,7 +70,7 @@ watch(() => route.query.q, loadProducts);
     
     <!-- Hero Section -->
     <section class="relative bg-white dark:bg-zinc-900 overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
-        <div class="absolute inset-0 z-0 opacity-40 dark:opacity-20 bg-[radial-gradient(#52525b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
         <div class="absolute top-0 right-0 w-96 h-96 bg-zinc-500/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-zinc-500/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
         

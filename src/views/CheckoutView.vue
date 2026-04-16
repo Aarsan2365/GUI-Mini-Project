@@ -28,7 +28,7 @@ const handlePayment = () => {
 
 <template>
   <div class="min-h-screen bg-zinc-50 dark:bg-zinc-950 py-12 md:py-20 px-4 transition-colors duration-300 flex items-center justify-center relative overflow-hidden">
-    <div class="absolute inset-0 z-0 opacity-40 dark:opacity-20 bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
     
     <div class="container max-w-2xl relative z-10">
       <button @click="router.back()" class="mb-6 flex items-center gap-2 text-zinc-500 hover:text-violet-500 transition-colors font-medium">
