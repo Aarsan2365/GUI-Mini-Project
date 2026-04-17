@@ -4,11 +4,16 @@ import type { Product, CartItem, User } from '../types';
 
 export const useStore = defineStore('main', () => {
     const cart = ref<CartItem[]>(JSON.parse(localStorage.getItem('cart') || '[]'));
+    const wishlist = ref<Product[]>(JSON.parse(localStorage.getItem('wishlist') || '[]'));
     const user = ref<User | null>(JSON.parse(localStorage.getItem('user') || 'null'));
     const isAuthenticated = ref<boolean>(!!localStorage.getItem('token'));
 
     const saveCart = () => {
         localStorage.setItem('cart', JSON.stringify(cart.value));
+    };
+
+    const saveWishlist = () => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlist.value));
     };
 
     const addToCart = (product: Product) => {
@@ -46,6 +51,20 @@ export const useStore = defineStore('main', () => {
         saveCart();
     };
 
+    const toggleWishlist = (product: Product) => {
+        const index = wishlist.value.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+            wishlist.value.splice(index, 1);
+        } else {
+            wishlist.value.push({ ...product });
+        }
+        saveWishlist();
+    };
+
+    const isInWishlist = (productId: number) => {
+        return wishlist.value.some(item => item.id === productId);
+    };
+
     const login = (userData: User) => {
         user.value = userData;
         isAuthenticated.value = true;
@@ -69,14 +88,17 @@ export const useStore = defineStore('main', () => {
     });
 
     return {
-        state: { cart, user, isAuthenticated },
+        state: { cart, user, isAuthenticated, wishlist },
         cart,
+        wishlist,
         user,
         isAuthenticated,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
+        toggleWishlist,
+        isInWishlist,
         login,
         logout,
         cartTotal,

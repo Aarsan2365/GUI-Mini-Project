@@ -57,6 +57,42 @@ const goBack = () => {
         Back
       </button>
 
+      <!-- Stepper UI -->
+      <div class="max-w-xl mx-auto mb-10 w-full px-4">
+        <div class="flex items-center justify-between relative">
+          <!-- Background Line -->
+          <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-[2px] bg-zinc-200 dark:bg-zinc-800 z-0"></div>
+          
+          <!-- Animated Progress Line -->
+          <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-[2px] bg-teal-500 transition-all duration-500 z-0 delay-100" 
+               :style="{ width: isSuccess ? '100%' : (currentStep === 'payment' ? '50%' : '0%') }"></div>
+
+          <!-- Step 1 -->
+          <div class="relative z-10 flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-2" :class="(!isSuccess && currentStep === 'address') ? 'text-teal-500' : 'text-zinc-400 dark:text-zinc-500'">
+             <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-500 bg-teal-500 text-white shadow-md">
+               <svg v-if="currentStep === 'payment' || isSuccess" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+               <span v-else>1</span>
+             </div>
+             <span class="ml-3 font-medium hidden sm:block transition-colors" :class="currentStep === 'address' && !isSuccess ? 'text-teal-500' : ''">Address</span>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="relative z-10 flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-2" :class="(!isSuccess && currentStep === 'payment') ? 'text-teal-500' : 'text-zinc-400 dark:text-zinc-500'">
+             <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-500 delay-100" :class="currentStep === 'payment' || isSuccess ? 'bg-teal-500 text-white shadow-md' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'">
+               <svg v-if="isSuccess" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+               <span v-else>2</span>
+             </div>
+             <span class="ml-3 font-medium hidden sm:block transition-colors" :class="currentStep === 'payment' && !isSuccess ? 'text-teal-500' : ''">Payment</span>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative z-10 flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-2" :class="isSuccess ? 'text-teal-500' : 'text-zinc-400 dark:text-zinc-500'">
+             <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-500 delay-300" :class="isSuccess ? 'bg-teal-500 text-white shadow-md' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'">3</div>
+             <span class="ml-3 font-medium hidden sm:block transition-colors" :class="isSuccess ? 'text-teal-500' : ''">Order Confirmation</span>
+          </div>
+        </div>
+      </div>
+
       <div v-if="isSuccess" class="bg-white dark:bg-zinc-900 rounded-3xl p-12 text-center shadow-2xl border border-zinc-100 dark:border-zinc-800 animate-in zoom-in duration-500">
         <div class="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -66,11 +102,6 @@ const goBack = () => {
       </div>
 
       <div v-else class="bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 relative min-h-[500px]">
-        
-        <!-- STEP INDICATOR -->
-        <div class="absolute top-0 left-0 w-full h-1 bg-zinc-100 dark:bg-zinc-800 z-20">
-            <div class="h-full bg-violet-500 transition-all duration-500" :class="currentStep === 'address' ? 'w-1/2' : 'w-full'"></div>
-        </div>
 
         <!-- ADDRESS STEP -->
         <div v-if="currentStep === 'address'" class="animate-in fade-in slide-in-from-left-4 duration-300 relative w-full h-full bg-white dark:bg-zinc-900 z-10">
