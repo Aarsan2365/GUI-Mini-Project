@@ -1,7 +1,7 @@
-# Nisan Store - Premium Tech Essentials
+# Aarz Store - Premium Tech Essentials
 
 ## Project Overview
-Nisan Store is a modern, responsive Single Page Application (SPA) built for purchasing premium tech gadgets. It seamlessly integrates a rich product catalog with dynamic filtering, real-time search, cart management, user authentication simulation, and a dark mode interface.
+Aarz Store is a modern, responsive Single Page Application (SPA) built for purchasing premium tech gadgets. It seamlessly integrates a rich product catalog with dynamic filtering, real-time search, cart management, user authentication simulation, and a dark mode interface.
 
 ## Features
 - **Product Catalog & Detail View**: Browse a responsive grid of products sourced from a mock API. Click any product to view detailed specifications, image galleries, and pricing.
